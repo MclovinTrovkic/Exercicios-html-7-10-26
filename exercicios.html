@@ -1,0 +1,104 @@
+<script>
+
+
+//  Padronização de nome
+function padronizarNome(nome) {
+  return nome.trim().toLowerCase();
+}
+
+
+function verificarEmail(email) {
+  return email.trim().endsWith("@exemplo.com") ? "E-mail válido" : "E-mail inválido";
+}
+
+//  Contagem de caracteres
+function contarCaracteres(frase) {
+  const total = frase.length;
+  const semEspacos = frase.replaceAll(" ", "").length;
+  return `Total: ${total}\nSem espaços: ${semEspacos}`;
+}
+
+//  Busca de palavra
+function buscarPalavra(mensagem) {
+  return mensagem.includes("JavaScript")
+    ? "A mensagem contém JavaScript."
+    : "A mensagem não contém JavaScript.";
+}
+
+//  Extração de nome de usuário
+function extrairUsuario(email) {
+  const posicao = email.indexOf("@");
+  if (posicao === -1) return "E-mail inválido (sem @)";
+  return email.slice(0, posicao);
+}
+
+// 6. Substituição de informações
+function substituirNome(mensagem) {
+  const comReplaceAll = mensagem.replaceAll("João", "Maria");
+  const comRegex = mensagem.replace(/João/g, "Maria"); // desafio extra
+  return `replaceAll: ${comReplaceAll}\nreplace + regex: ${comRegex}`;
+}
+
+// 7. Formatação de código de produto
+function formatarCodigo(codigo) {
+  const maiusculo = codigo.trim().toUpperCase();
+  return maiusculo.slice(0, 3) + "-" + maiusculo.slice(3);
+}
+
+//  Inversão de uma string
+function inverterString(texto) {
+  return texto.split("").reverse().join("");
+}
+
+//  Análise de uma senha
+function validarSenha(senha) {
+  const temTamanho = senha.length >= 8;
+  const temMaiuscula = senha !== senha.toLowerCase();
+  const temMinuscula = senha !== senha.toUpperCase();
+  const temNumero = /\d/.test(senha);
+  return temTamanho && temMaiuscula && temMinuscula && temNumero;
+}
+
+// Formatação de nome completo
+function formatarNome(nome) {
+  const limpo = nome.trim();
+  if (limpo === "") return "";
+  return limpo
+    .split(/\s+/)
+    .map(p => p.charAt(0).toUpperCase() + p.slice(1).toLowerCase())
+    .join(" ");
+}
+
+
+console.log(padronizarNome("   joÃO da silVA   "));
+console.log(verificarEmail("aluno@exemplo.com"));
+console.log(contarCaracteres("JavaScript é muito interessante"));
+console.log(buscarPalavra("Estou estudando JavaScript para desenvolver aplicações web."));
+console.log(extrairUsuario("carlos.silva@gmail.com"));
+console.log(substituirNome("Olá, João! Seja bem-vindo, João!"));
+console.log(formatarCodigo("abc123456"));
+console.log(inverterString("javascript"));
+console.log(validarSenha("JavaScript123"));
+console.log(formatarNome("   maria   da   silva   "));
+
+//  Ligação com a interface 
+function ligar(n, funcao) {
+  document.getElementById(`btn${n}`).addEventListener("click", () => {
+    const valor = document.getElementById(`input${n}`).value;
+    const resultado = document.getElementById(`resultado${n}`);
+    resultado.style.whiteSpace = "pre-line";
+    resultado.textContent = funcao(valor);
+  });
+}
+
+ligar(1, v => `"${padronizarNome(v)}"`);
+ligar(2, verificarEmail);
+ligar(3, contarCaracteres);
+ligar(4, buscarPalavra);
+ligar(5, extrairUsuario);
+ligar(6, substituirNome);
+ligar(7, formatarCodigo);
+ligar(8, inverterString);
+ligar(9, v => String(validarSenha(v)));
+ligar(10, v => `"${formatarNome(v)}"`);
+</script>

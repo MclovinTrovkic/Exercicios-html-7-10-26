@@ -1,0 +1,100 @@
+<script>
+
+const secoes = document.querySelectorAll("main > section.questao");
+
+function mostrar(n, texto) {
+  console.log(`--- Exercício ${n} ---\n${texto}`);
+  const pre = document.createElement("pre");
+  pre.innerHTML = "<code></code>";
+  pre.firstChild.textContent = texto;
+  secoes[n - 1].appendChild(pre);
+}
+
+// 1
+{
+  const valor = 17.684;
+  mostrar(1, [Math.round(valor), Math.floor(valor), Math.ceil(valor)].join("\n"));
+}
+
+// 2
+{
+  const preco = 149.98765;
+  const comoString = preco.toFixed(2);
+  const comoNumero = Number(preco.toFixed(2)); // desafio
+  mostrar(2, `${comoString}\nComo número: ${comoNumero} (${typeof comoNumero})`);
+}
+
+// 3 
+{
+  const valor1 = "25";
+  const valor2 = "17.5";
+  const a = Number(valor1);
+  const b = Number(valor2);
+  mostrar(3,
+    `Soma: ${a + b}\nDiferença: ${a - b}\nProduto: ${a * b}\nQuociente: ${a / b}`);
+}
+
+{
+  const valor = "123.45";
+  const ehValido = !Number.isNaN(Number(valor));
+  mostrar(4, ehValido ? "Valor numérico válido" : "Valor inválido");
+}
+
+{
+  const verificar = n =>
+    Number.isInteger(n) ? "O número é inteiro." : "O número não é inteiro.";
+  const testes = [42.0, 42.5, "42", NaN];
+  mostrar(5, testes.map(t => `${typeof t === "string" ? `"${t}"` : t} → ${verificar(t)}`).join("\n"));
+}
+
+
+{
+  const numeros = [17, 4, 89, 32, 12, 56];
+  mostrar(6, `Maior: ${Math.max(...numeros)}\nMenor: ${Math.min(...numeros)}`);
+}
+
+
+function gerarNumero() {
+  return Math.floor(Math.random() * 100) + 1;
+}
+mostrar(7, `gerarNumero() → ${gerarNumero()}`);
+
+//
+function calcularMedia(...notas) {
+  const soma = notas.reduce((acc, nota) => acc + nota, 0);
+  return (soma / notas.length).toFixed(2);
+}
+{
+  const nota1 = 7.5, nota2 = 8.25, nota3 = 9.0;
+  mostrar(8, `Média: ${calcularMedia(nota1, nota2, nota3)}`);
+}
+
+// 
+mostrar(9,
+  `MAX_SAFE_INTEGER: ${Number.MAX_SAFE_INTEGER}\n` +
+  `MIN_SAFE_INTEGER: ${Number.MIN_SAFE_INTEGER}\n` +
+  `MAX_VALUE: ${Number.MAX_VALUE}\n\n` +
+  `Diferença: MAX_SAFE_INTEGER (2^53 - 1) é o maior inteiro que pode ser\n` +
+  `representado sem perder precisão (acima dele, inteiros consecutivos\n` +
+  `não têm representação exata). MAX_VALUE (~1.79e308) é o maior número\n` +
+  `finito que o tipo number suporta, mas nesse intervalo já há perda de precisão.`);
+
+// 
+function analisarNumero(valor) {
+  return {
+    valor,
+    ehNumero: typeof valor === "number" && !Number.isNaN(valor),
+    ehInteiro: Number.isInteger(valor),
+    ehFinito: Number.isFinite(valor),
+    ehSeguro: Number.isSafeInteger(valor)
+  };
+}
+{
+  const testes = [42, 42.5, "42", Infinity, NaN];
+  mostrar(10, testes
+    .map(t => `analisarNumero(${typeof t === "string" ? `"${t}"` : t}) → ` +
+              JSON.stringify(analisarNumero(t), (k, v) =>
+                (typeof v === "number" && !Number.isFinite(v)) ? String(v) : v))
+    .join("\n"));
+}
+</script>
